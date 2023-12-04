@@ -19,7 +19,7 @@ module.exports = (client) => {
                 continue;
             };
 
-            log('Loaded new event: ' + file, 'info');
+            log('Se ha cargado el evento: ' + file, 'info');
 
             if (module.once) {
                 client.once(module.event, (...args) => module.run(client, ...args));

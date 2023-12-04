@@ -39,7 +39,7 @@ module.exports = (client) => {
                     client.applicationcommandsArray.push(module.structure);
                 };
 
-                log('Loaded new command: ' + file, 'info');
+                log('Se ha cargado el comando: ' + file, 'info');
             };
         };
     };

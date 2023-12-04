@@ -14,7 +14,7 @@ module.exports = async (client) => {
 
   try {
     log(
-      "Started loading application commands... (this might take minutes!)",
+      "Cargando los comandos de la aplicación..",
       "info"
     );
 
