@@ -4,7 +4,7 @@ const ExtendedClient = require('../../../class/ExtendedClient');
 module.exports = {
     structure: {
         name: 'ping',
-        description: 'Replies with Pong!',
+        description: '¿Queres saber cual es tu ping? ¡Pong!',
         aliases: ['p'],
         permissions: 'Administrator',
         cooldown: 5000
@@ -17,7 +17,7 @@ module.exports = {
     run: async (client, message, args) => {
 
         await message.reply({
-            content: 'Pong! ' +  client.ws.ping
+            content: '¡Pong!' +  client.ws.ping
         });
 
     }

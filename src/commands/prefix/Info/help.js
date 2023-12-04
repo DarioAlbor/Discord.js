@@ -6,7 +6,7 @@ const GuildSchema = require('../../../schemas/GuildSchema');
 module.exports = {
     structure: {
         name: 'help',
-        description: 'View all the possible commands!',
+        description: '¡Todos nuestros comandos disponibles!',
         aliases: ['h'],
         cooldown: 15000
     },
@@ -35,10 +35,10 @@ module.exports = {
         await message.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setTitle('Help command')
+                    .setTitle('Todos nuestros comandos ✨!')
                     .addFields(
-                        { name: 'Slash commands', value: `${mapIntCmds.join('\n')}` },
-                        { name: 'Prefix commands', value: `${mapPreCmds.join('\n')}` }
+                        { name: 'Comandos con "/"', value: `${mapIntCmds.join('\n')}` },
+                        { name: 'Comandos con "?"', value: `${mapPreCmds.join('\n')}` }
                     )
             ]
         });

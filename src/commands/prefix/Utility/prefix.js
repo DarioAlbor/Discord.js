@@ -19,7 +19,7 @@ module.exports = {
 
         if (!config.handler?.mongodb?.toggle) {
             await message.reply({
-                content: 'Database is not ready, this command cannot be executed.'
+                content: ':bangbang: La base de datos no se encuentra disponible actualmente, contacta con @lorddarz'
             });
 
             return;

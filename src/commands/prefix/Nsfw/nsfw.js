@@ -4,7 +4,7 @@ const ExtendedClient = require("../../../class/ExtendedClient");
 module.exports = {
   structure: {
     name: "nsfw",
-    description: "Nsfw Command",
+    description: "🔞 Contenido NSFW",
     aliases: ["ns"],
     permissions: "SendMessages",
     cooldown: 5000,
@@ -17,7 +17,7 @@ module.exports = {
    */
   run: async (client, message, args) => {
     await message.reply({
-      content: "NSFW Command",
+      content: "En mantenimiento ⚒️",
     });
   },
 };
