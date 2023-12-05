@@ -1,9 +1,4 @@
-const {
-    SlashCommandBuilder,
-    EmbedBuilder,
-    ChatInputCommandInteraction,
-    AttachmentBuilder,
-} = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction, AttachmentBuilder } = require("discord.js");
 const ExtendedClient = require("../../../class/ExtendedClient");
 
 module.exports = {
@@ -24,7 +19,10 @@ module.exports = {
      * @param {ChatInputCommandInteraction<true>} interaction
      */
     run: async (client, interaction, args) => {
-        await interaction.deferReply();
+        if (interaction.options.developers) {
+            // Only defer reply for developers
+            await interaction.deferReply();
+        }
 
         const code = interaction.options.getString("code");
 
@@ -56,7 +54,6 @@ module.exports = {
                     new AttachmentBuilder(Buffer.from(`${err}`, 'utf-8'), { name: 'output.txt' })
                 ]
             });
-        };
-
+        }
     },
 };
