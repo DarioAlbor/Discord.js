@@ -1,3 +1,4 @@
+// Archivo: comandos/vefixy.js
 const { Message, EmbedBuilder } = require('discord.js');
 const ExtendedClient = require('../../../class/ExtendedClient');
 const config = require('../../../config');
@@ -6,8 +7,8 @@ const GuildSchema = require('../../../schemas/GuildSchema');
 module.exports = {
     structure: {
         name: 'vefixy',
-        description: '¡Todos nuestros comandos disponibles!',
-        aliases: ['h'],
+        description: '✨ ¡Toda la información de Vefixy.com en un solo comando! ✨\n💻 Ingresa ?vefixy y recibí más información sobre mi uso.',
+        aliases: ['v'],
         cooldown: 15000
     },
     /**
@@ -16,32 +17,37 @@ module.exports = {
      * @param {string[]} args 
      */
     run: async (client, message, args) => {
+        const vefixyEmbed = new EmbedBuilder()
+            .setTitle('✨ ¡Toda la información de Vefixy.com en un solo comando! ✨')
+            .setDescription('💻 Ingresa ?vefixy y recibí más información sobre mi uso.');
 
-        let prefix = config.handler.prefix;
-
-        if (config.handler?.mongodb?.toggle) {
-            try {
-                const data = (await GuildSchema.findOne({ guild: message.guildId }));
-
-                if (data && data?.prefix) prefix = data.prefix;
-            } catch {
-                prefix = config.handler.prefix;
-            };
-        };
-
-        const mapIntCmds = client.applicationcommandsArray.map((v) => `\`${(v.type === 2 || v.type === 3) ? '' : '/'}${v.name}\`: ${v.description || '(No description)'}`);
-        const mapPreCmds = client.collection.prefixcommands.map((v) => `\`${prefix}${v.structure.name}\` (${v.structure.aliases.length > 0 ? v.structure.aliases.map((a) => `**${a}**`).join(', ') : 'None'}): ${v.structure.description || '(No description)'}`);
-
-        await message.reply({
-            embeds: [
-                new EmbedBuilder()
-                    .setTitle('Todos nuestros comandos ✨!')
-                    .addFields(
-                        { name: 'Comandos con "/"', value: `${mapIntCmds.join('\n')}` },
-                        { name: 'Comandos con "?"', value: `${mapPreCmds.join('\n')}` }
-                    )
-            ]
+        const vefixyMessage = await message.reply({
+            embeds: [vefixyEmbed]
         });
 
+        // Agregamos la reacción automática al emoji :heart_hands:
+        vefixyMessage.react('❤️');
+
+        // Crear un filtro para el evento de reacción
+        const filter = (reaction, user) => {
+            return ['❤️'].includes(reaction.emoji.name) && user.id !== client.user.id;
+        };
+
+        // Crear un colector de reacciones
+        const collector = vefixyMessage.createReactionCollector({ filter, time: 30000 });
+
+        // Manejar evento de recolección de reacciones
+        collector.on('collect', async (reaction, user) => {
+            // Responder con frases personalizadas
+            if (reaction.emoji.name === '❤️') {
+                await message.channel.send(`Que me reaccionas, ${user.username}? ¿Buscando travas en el microcentro, ${user.username}?`);
+            }
+        });
+
+        // Manejar evento de finalización del colector
+        collector.on('end', collected => {
+            // Limpiar las reacciones después de 30 segundos
+            vefixyMessage.reactions.removeAll().catch(error => console.error('Error al limpiar las reacciones:', error));
+        });
     }
 };
